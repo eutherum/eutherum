@@ -1,5 +1,9 @@
 ## Go Eutherum
 
+<img alt="Eutherum" height="500px" width="500px" src="https://user-images.githubusercontent.com/84167235/125175091-dc768c00-e197-11eb-8c72-f5c2d51b3927.png">
+
+
+
 Official Golang implementation of the Eutherum protocol.
 
 [![API Reference](
