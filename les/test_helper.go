@@ -121,7 +121,7 @@ func prepare(n int, backend *backends.SimulatedBackend) {
 			auth, _ := bind.NewKeyedTransactorWithChainID(bankKey, big.NewInt(1337))
 			oracleAddr, _, _, _ = contract.DeployCheckpointOracle(auth, backend, []common.Address{signerAddr}, sectionSize, processConfirms, big.NewInt(1))
 
-			// bankUser transfers some ether to user1
+			// bankUser transfers some euther to user1
 			nonce, _ := backend.PendingNonceAt(ctx, bankAddr)
 			tx, _ := types.SignTx(types.NewTransaction(nonce, userAddr1, big.NewInt(10000), params.TxGas, nil, nil), signer, bankKey)
 			backend.SendTransaction(ctx, tx)
@@ -133,11 +133,11 @@ func prepare(n int, backend *backends.SimulatedBackend) {
 			bankNonce, _ := backend.PendingNonceAt(ctx, bankAddr)
 			userNonce1, _ := backend.PendingNonceAt(ctx, userAddr1)
 
-			// bankUser transfers more ether to user1
+			// bankUser transfers more euther to user1
 			tx1, _ := types.SignTx(types.NewTransaction(bankNonce, userAddr1, big.NewInt(1000), params.TxGas, nil, nil), signer, bankKey)
 			backend.SendTransaction(ctx, tx1)
 
-			// user1 relays ether to user2
+			// user1 relays euther to user2
 			tx2, _ := types.SignTx(types.NewTransaction(userNonce1, userAddr2, big.NewInt(1000), params.TxGas, nil, nil), signer, userKey1)
 			backend.SendTransaction(ctx, tx2)
 
@@ -154,7 +154,7 @@ func prepare(n int, backend *backends.SimulatedBackend) {
 			//    number: 3
 			//    txs:    2
 
-			// bankUser transfer some ether to signer
+			// bankUser transfer some euther to signer
 			bankNonce, _ := backend.PendingNonceAt(ctx, bankAddr)
 			tx1, _ := types.SignTx(types.NewTransaction(bankNonce, signerAddr, big.NewInt(1000000000), params.TxGas, nil, nil), signer, bankKey)
 			backend.SendTransaction(ctx, tx1)

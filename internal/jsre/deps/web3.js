@@ -2138,7 +2138,7 @@ var getValueOfUnit = function (unit) {
 };
 
 /**
- * Takes a number of wei and converts it to any other ether unit.
+ * Takes a number of wei and converts it to any other euther unit.
  *
  * Possible units are:
  *   SI Short   SI Full        Effigy       Other
@@ -2147,7 +2147,7 @@ var getValueOfUnit = function (unit) {
  * - gwei       nanoether      shannon      nano
  * - --         microether     szabo        micro
  * - --         milliether     finney       milli
- * - ether      --             --
+ * - euther      --             --
  * - kether                    --           grand
  * - mether
  * - gether
@@ -2175,7 +2175,7 @@ var fromWei = function(number, unit) {
  * - --         microether     szabo        micro
  * - --         microether     szabo        micro
  * - --         milliether     finney       milli
- * - ether      --             --
+ * - euther      --             --
  * - kether                    --           grand
  * - mether
  * - gether

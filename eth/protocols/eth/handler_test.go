@@ -411,7 +411,7 @@ func testGetNodeData(t *testing.T, protocol uint) {
 			tx, _ := types.SignTx(types.NewTransaction(block.TxNonce(testAddr), acc1Addr, big.NewInt(10000), params.TxGas, nil, nil), signer, testKey)
 			block.AddTx(tx)
 		case 1:
-			// In block 2, the test bank sends some more ether to account #1.
+			// In block 2, the test bank sends some more euther to account #1.
 			// acc1Addr passes it on to account #2.
 			tx1, _ := types.SignTx(types.NewTransaction(block.TxNonce(testAddr), acc1Addr, big.NewInt(1000), params.TxGas, nil, nil), signer, testKey)
 			tx2, _ := types.SignTx(types.NewTransaction(block.TxNonce(acc1Addr), acc2Addr, big.NewInt(1000), params.TxGas, nil, nil), signer, acc1Key)
@@ -527,7 +527,7 @@ func testGetBlockReceipts(t *testing.T, protocol uint) {
 			tx, _ := types.SignTx(types.NewTransaction(block.TxNonce(testAddr), acc1Addr, big.NewInt(10000), params.TxGas, nil, nil), signer, testKey)
 			block.AddTx(tx)
 		case 1:
-			// In block 2, the test bank sends some more ether to account #1.
+			// In block 2, the test bank sends some more euther to account #1.
 			// acc1Addr passes it on to account #2.
 			tx1, _ := types.SignTx(types.NewTransaction(block.TxNonce(testAddr), acc1Addr, big.NewInt(1000), params.TxGas, nil, nil), signer, testKey)
 			tx2, _ := types.SignTx(types.NewTransaction(block.TxNonce(acc1Addr), acc2Addr, big.NewInt(1000), params.TxGas, nil, nil), signer, acc1Key)
