@@ -1,8 +1,8 @@
 # Faucet
 
-The `faucet` is a simplistic web application with the goal of distributing small amounts of Ether in private and test networks.
+The `faucet` is a simplistic web application with the goal of distributing small amounts of Euther in private and test networks.
 
-Users need to post their Eutherum addresses to fund in a Twitter status update or public Facebook post and share the link to the faucet. The faucet will in turn deduplicate user requests and send the Ether. After a funding round, the faucet prevents the same user requesting again for a pre-configured amount of time, proportional to the amount of Ether requested.
+Users need to post their Eutherum addresses to fund in a Twitter status update or public Facebook post and share the link to the faucet. The faucet will in turn deduplicate user requests and send the Ether. After a funding round, the faucet prevents the same user requesting again for a pre-configured amount of time, proportional to the amount of Euther requested.
 
 ## Operation
 
@@ -23,7 +23,7 @@ To be able to distribute funds, the `faucet` needs access to an already funded E
 - `--account.json` is a path to the Eutherum account's JSON key file
 - `--account.pass` is a path to a text file with the decryption passphrase
 
-The faucet is able to distribute various amounts of Ether in exchange for various timeouts. These can be configured via:
+The faucet is able to distribute various amounts of Euther in exchange for various timeouts. These can be configured via:
 
 - `--faucet.amount` is the number of Ethers to send by default
 - `--faucet.minutes` is the time to wait before allowing a rerequest
