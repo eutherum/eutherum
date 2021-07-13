@@ -24,7 +24,7 @@ import (
 	"github.com/eutherum/eutherum/accounts/external"
 	"github.com/eutherum/eutherum/cmd/utils"
 	"github.com/eutherum/eutherum/common"
-	"github.com/eutherum/eutherum/contracts/checkpointoracle"
+	"github.com/eutherum/eutherum/contracts/checkpointeuracle"
 	"github.com/eutherum/eutherum/ethclient"
 	"github.com/eutherum/eutherum/params"
 	"github.com/eutherum/eutherum/rpc"
@@ -98,12 +98,12 @@ func getCheckpoint(ctx *cli.Context, client *rpc.Client) *params.TrustedCheckpoi
 
 // newContract creates a registrar contract instance with specified
 // contract address or the default contracts for mainnet or testnet.
-func newContract(client *rpc.Client) (common.Address, *checkpointoracle.CheckpointOracle) {
+func newContract(client *rpc.Client) (common.Address, *checkpointeuracle.CheckpointEuracle) {
 	addr := getContractAddr(client)
 	if addr == (common.Address{}) {
 		utils.Fatalf("No specified registrar contract address")
 	}
-	contract, err := checkpointoracle.NewCheckpointOracle(addr, ethclient.NewClient(client))
+	contract, err := checkpointeuracle.NewCheckpointEuracle(addr, ethclient.NewClient(client))
 	if err != nil {
 		utils.Fatalf("Failed to setup registrar contract %s: %v", addr, err)
 	}

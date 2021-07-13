@@ -43,13 +43,13 @@ var TrustedCheckpoints = map[common.Hash]*TrustedCheckpoint{
 	GoerliGenesisHash:  GoerliTrustedCheckpoint,
 }
 
-// CheckpointOracles associates each known checkpoint oracles with the genesis hash of
+// CheckpointEuracles associates each known checkpoint euracles with the genesis hash of
 // the chain it belongs to.
-var CheckpointOracles = map[common.Hash]*CheckpointOracleConfig{
-	MainnetGenesisHash: MainnetCheckpointOracle,
-	RopstenGenesisHash: RopstenCheckpointOracle,
-	RinkebyGenesisHash: RinkebyCheckpointOracle,
-	GoerliGenesisHash:  GoerliCheckpointOracle,
+var CheckpointEuracles = map[common.Hash]*CheckpointEuracleConfig{
+	MainnetGenesisHash: MainnetCheckpointEuracle,
+	RopstenGenesisHash: RopstenCheckpointEuracle,
+	RinkebyGenesisHash: RinkebyCheckpointEuracle,
+	GoerliGenesisHash:  GoerliCheckpointEuracle,
 }
 
 var (
@@ -80,8 +80,8 @@ var (
 		BloomRoot:    common.HexToHash("0x8769d466c47ec57283faaa9886a2f9e60ace60bd4f02ac4be7f0a7a428db66c2"),
 	}
 
-	// MainnetCheckpointOracle contains a set of configs for the main network euracle.
-	MainnetCheckpointOracle = &CheckpointOracleConfig{
+	// MainnetCheckpointEuracle contains a set of configs for the main network euracle.
+	MainnetCheckpointEuracle = &CheckpointEuracleConfig{
 		Address: common.HexToAddress("0xdd7e58b8c2eca88bf27a421af83599553000cafb"),
 		Signers: []common.Address{
 			common.HexToAddress("0x422Ebe8fA4b1575EFa5F3f7C012b1c19438D9838"), // Frederick
@@ -116,8 +116,8 @@ var (
 		BloomRoot:    common.HexToHash("0x3dc04cb1be7ddc271f3f83469b47b76184a79d7209ef51d85b1539ea6d25a645"),
 	}
 
-	// RopstenCheckpointOracle contains a set of configs for the Ropsten test network euracle.
-	RopstenCheckpointOracle = &CheckpointOracleConfig{
+	// RopstenCheckpointEuracle contains a set of configs for the Ropsten test network euracle.
+	RopstenCheckpointEuracle = &CheckpointEuracleConfig{
 		Address: common.HexToAddress("0xEF79475013f154E6A65b54cB2742867791bf0B84"),
 		Signers: []common.Address{
 			common.HexToAddress("0x32162F3581E88a5f62e8A61892B42C46E2c18f7b"), // Peter
@@ -159,8 +159,8 @@ var (
 		BloomRoot:    common.HexToHash("0x70e01232b66df9a7778ae3291c9217afb9a2d9f799f32d7b912bd37e7bce83a8"),
 	}
 
-	// RinkebyCheckpointOracle contains a set of configs for the Rinkeby test network euracle.
-	RinkebyCheckpointOracle = &CheckpointOracleConfig{
+	// RinkebyCheckpointEuracle contains a set of configs for the Rinkeby test network euracle.
+	RinkebyCheckpointEuracle = &CheckpointEuracleConfig{
 		Address: common.HexToAddress("0xebe8eFA441B9302A0d7eaECc277c09d20D684540"),
 		Signers: []common.Address{
 			common.HexToAddress("0xd9c9cd5f6779558b6e0ed4e6acf6b1947e7fa1f3"), // Peter
@@ -200,8 +200,8 @@ var (
 		BloomRoot:    common.HexToHash("0x523c169286cfca52e8a6579d8c35dc8bf093412d8a7478163bfa81ae91c2492d"),
 	}
 
-	// GoerliCheckpointOracle contains a set of configs for the Goerli test network euracle.
-	GoerliCheckpointOracle = &CheckpointOracleConfig{
+	// GoerliCheckpointEuracle contains a set of configs for the Goerli test network euracle.
+	GoerliCheckpointEuracle = &CheckpointEuracleConfig{
 		Address: common.HexToAddress("0x18CA0E045F0D772a851BC7e48357Bcaab0a0795D"),
 		Signers: []common.Address{
 			common.HexToAddress("0x4769bcaD07e3b938B7f43EB7D278Bc7Cb9efFb38"), // Peter
@@ -292,9 +292,9 @@ func (c *TrustedCheckpoint) Empty() bool {
 	return c.SectionHead == (common.Hash{}) || c.CHTRoot == (common.Hash{}) || c.BloomRoot == (common.Hash{})
 }
 
-// CheckpointOracleConfig represents a set of checkpoint contract(which acts as an euracle)
+// CheckpointEuracleConfig represents a set of checkpoint contract(which acts as an euracle)
 // config which used for light client checkpoint syncing.
-type CheckpointOracleConfig struct {
+type CheckpointEuracleConfig struct {
 	Address   common.Address   `json:"address"`
 	Signers   []common.Address `json:"signers"`
 	Threshold uint64           `json:"threshold"`

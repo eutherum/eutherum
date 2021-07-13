@@ -55,10 +55,10 @@ func (c Config) MarshalTOML() (interface{}, error) {
 		DocRoot                 string `toml:"-"`
 		EWASMInterpreter        string
 		EVMInterpreter          string
-		RPCGasCap               uint64                         `toml:",omitempty"`
-		RPCTxFeeCap             float64                        `toml:",omitempty"`
-		Checkpoint              *params.TrustedCheckpoint      `toml:",omitempty"`
-		CheckpointOracle        *params.CheckpointOracleConfig `toml:",omitempty"`
+		RPCGasCap               uint64                          `toml:",omitempty"`
+		RPCTxFeeCap             float64                         `toml:",omitempty"`
+		Checkpoint              *params.TrustedCheckpoint       `toml:",omitempty"`
+		CheckpointEuracle       *params.CheckpointEuracleConfig `toml:",omitempty"`
 	}
 	var enc Config
 	enc.Genesis = c.Genesis
@@ -102,7 +102,7 @@ func (c Config) MarshalTOML() (interface{}, error) {
 	enc.RPCGasCap = c.RPCGasCap
 	enc.RPCTxFeeCap = c.RPCTxFeeCap
 	enc.Checkpoint = c.Checkpoint
-	enc.CheckpointOracle = c.CheckpointOracle
+	enc.CheckpointEuracle = c.CheckpointEuracle
 	return &enc, nil
 }
 
@@ -147,10 +147,10 @@ func (c *Config) UnmarshalTOML(unmarshal func(interface{}) error) error {
 		DocRoot                 *string `toml:"-"`
 		EWASMInterpreter        *string
 		EVMInterpreter          *string
-		RPCGasCap               *uint64                        `toml:",omitempty"`
-		RPCTxFeeCap             *float64                       `toml:",omitempty"`
-		Checkpoint              *params.TrustedCheckpoint      `toml:",omitempty"`
-		CheckpointOracle        *params.CheckpointOracleConfig `toml:",omitempty"`
+		RPCGasCap               *uint64                         `toml:",omitempty"`
+		RPCTxFeeCap             *float64                        `toml:",omitempty"`
+		Checkpoint              *params.TrustedCheckpoint       `toml:",omitempty"`
+		CheckpointEuracle       *params.CheckpointEuracleConfig `toml:",omitempty"`
 	}
 	var dec Config
 	if err := unmarshal(&dec); err != nil {
@@ -279,8 +279,8 @@ func (c *Config) UnmarshalTOML(unmarshal func(interface{}) error) error {
 	if dec.Checkpoint != nil {
 		c.Checkpoint = dec.Checkpoint
 	}
-	if dec.CheckpointOracle != nil {
-		c.CheckpointOracle = dec.CheckpointOracle
+	if dec.CheckpointEuracle != nil {
+		c.CheckpointEuracle = dec.CheckpointEuracle
 	}
 	return nil
 }

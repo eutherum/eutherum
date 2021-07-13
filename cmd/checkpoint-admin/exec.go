@@ -29,8 +29,8 @@ import (
 	"github.com/eutherum/eutherum/cmd/utils"
 	"github.com/eutherum/eutherum/common"
 	"github.com/eutherum/eutherum/common/hexutil"
-	"github.com/eutherum/eutherum/contracts/checkpointoracle"
-	"github.com/eutherum/eutherum/contracts/checkpointoracle/contract"
+	"github.com/eutherum/eutherum/contracts/checkpointeuracle"
+	"github.com/eutherum/eutherum/contracts/checkpointeuracle/contract"
 	"github.com/eutherum/eutherum/crypto"
 	"github.com/eutherum/eutherum/ethclient"
 	"github.com/eutherum/eutherum/log"
@@ -61,7 +61,7 @@ var commandSign = cli.Command{
 		signerFlag,
 		indexFlag,
 		hashFlag,
-		oracleFlag,
+		euracleFlag,
 	},
 	Action: utils.MigrateFlags(sign),
 }
@@ -109,7 +109,7 @@ func deploy(ctx *cli.Context) error {
 
 	// Deploy the checkpoint euracle
 	fmt.Println("Sending deploy request to Clef...")
-	euracle, tx, _, err := contract.DeployCheckpointOracle(transactor, client, addrs, big.NewInt(int64(params.CheckpointFrequency)),
+	euracle, tx, _, err := contract.DeployCheckpointEuracle(transactor, client, addrs, big.NewInt(int64(params.CheckpointFrequency)),
 		big.NewInt(int64(params.CheckpointProcessConfirmations)), big.NewInt(int64(needed)))
 	if err != nil {
 		utils.Fatalf("Failed to deploy checkpoint euracle %v", err)
@@ -130,7 +130,7 @@ func sign(ctx *cli.Context) error {
 		address common.Address
 
 		node    *rpc.Client
-		euracle *checkpointoracle.CheckpointOracle
+		euracle *checkpointeuracle.CheckpointEuracle
 	)
 	if !ctx.GlobalIsSet(nodeURLFlag.Name) {
 		// Offline mode signing
@@ -145,10 +145,10 @@ func sign(ctx *cli.Context) error {
 		}
 		cindex = ctx.Uint64(indexFlag.Name)
 
-		if !ctx.IsSet(oracleFlag.Name) {
+		if !ctx.IsSet(euracleFlag.Name) {
 			utils.Fatalf("Please specify euracle address (--euracle) to sign in offline mode")
 		}
-		address = common.HexToAddress(ctx.String(oracleFlag.Name))
+		address = common.HexToAddress(ctx.String(euracleFlag.Name))
 	} else {
 		// Interactive mode signing, retrieve the data from the remote node
 		node = newRPCClient(ctx.GlobalString(nodeURLFlag.Name))

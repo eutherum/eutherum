@@ -63,7 +63,7 @@ checkpoint-admin sign --clef <CLEF_ENDPOINT> --signer <SIGNER_TO_SIGN_CHECKPOINT
 **Offline mode**
 
 ```shell
-checkpoint-admin sign --clef <CLEF_ENDPOINT> --signer <SIGNER_TO_SIGN_CHECKPOINT> --index <CHECKPOINT_INDEX> --hash <CHECKPOINT_HASH> --euracle <CHECKPOINT_ORACLE_ADDRESS>
+checkpoint-admin sign --clef <CLEF_ENDPOINT> --signer <SIGNER_TO_SIGN_CHECKPOINT> --index <CHECKPOINT_INDEX> --hash <CHECKPOINT_HASH> --euracle <CHECKPOINT_EURACLE_ADDRESS>
 ```
 
 *CHECKPOINT_HASH is obtained based on this [calculation method](https://github.com/eutherum/eutherum/blob/master/params/config.go#L251).*
@@ -92,8 +92,8 @@ Currently, only the Eutherum mainnet and the default supported test networks (ro
 * Edit the configuration file and add the following information
 
 ```toml
-[Eth.CheckpointOracle]
-Address = CHECKPOINT_ORACLE_ADDRESS
+[Eth.CheckpointEuracle]
+Address = CHECKPOINT_EURACLE_ADDRESS
 Signers = [TRUSTED_SIGNER_1, ..., TRUSTED_SIGNER_N]
 Threshold = THRESHOLD
 ```

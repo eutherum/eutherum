@@ -198,8 +198,8 @@ type Config struct {
 	// Checkpoint is a hardcoded checkpoint which can be nil.
 	Checkpoint *params.TrustedCheckpoint `toml:",omitempty"`
 
-	// CheckpointOracle is the configuration for checkpoint euracle.
-	CheckpointOracle *params.CheckpointOracleConfig `toml:",omitempty"`
+	// CheckpointEuracle is the configuration for checkpoint euracle.
+	CheckpointEuracle *params.CheckpointEuracleConfig `toml:",omitempty"`
 
 	// Berlin block override (TODO: remove after the fork)
 	OverrideLondon *big.Int `toml:",omitempty"`

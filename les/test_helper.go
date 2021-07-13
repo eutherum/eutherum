@@ -34,7 +34,7 @@ import (
 	"github.com/eutherum/eutherum/common"
 	"github.com/eutherum/eutherum/common/mclock"
 	"github.com/eutherum/eutherum/consensus/ethash"
-	"github.com/eutherum/eutherum/contracts/checkpointoracle/contract"
+	"github.com/eutherum/eutherum/contracts/checkpointeuracle/contract"
 	"github.com/eutherum/eutherum/core"
 	"github.com/eutherum/eutherum/core/forkid"
 	"github.com/eutherum/eutherum/core/rawdb"
@@ -43,7 +43,7 @@ import (
 	"github.com/eutherum/eutherum/eth/ethconfig"
 	"github.com/eutherum/eutherum/ethdb"
 	"github.com/eutherum/eutherum/event"
-	"github.com/eutherum/eutherum/les/checkpointoracle"
+	"github.com/eutherum/eutherum/les/checkpointeuracle"
 	"github.com/eutherum/eutherum/les/flowcontrol"
 	vfs "github.com/eutherum/eutherum/les/vflux/server"
 	"github.com/eutherum/eutherum/light"
@@ -70,7 +70,7 @@ var (
 	testEventEmitterCode = common.Hex2Bytes("60606040523415600e57600080fd5b7f57050ab73f6b9ebdd9f76b8d4997793f48cf956e965ee070551b9ca0bb71584e60405160405180910390a160358060476000396000f3006060604052600080fd00a165627a7a723058203f727efcad8b5811f8cb1fc2620ce5e8c63570d697aef968172de296ea3994140029")
 
 	// Checkpoint euracle relative fields
-	oracleAddr   common.Address
+	euracleAddr  common.Address
 	signerKey, _ = crypto.GenerateKey()
 	signerAddr   = crypto.PubkeyToAddress(signerKey.PublicKey)
 )
@@ -119,7 +119,7 @@ func prepare(n int, backend *backends.SimulatedBackend) {
 
 			// deploy checkpoint contract
 			auth, _ := bind.NewKeyedTransactorWithChainID(bankKey, big.NewInt(1337))
-			oracleAddr, _, _, _ = contract.DeployCheckpointOracle(auth, backend, []common.Address{signerAddr}, sectionSize, processConfirms, big.NewInt(1))
+			euracleAddr, _, _, _ = contract.DeployCheckpointEuracle(auth, backend, []common.Address{signerAddr}, sectionSize, processConfirms, big.NewInt(1))
 
 			// bankUser transfers some euther to user1
 			nonce, _ := backend.PendingNonceAt(ctx, bankAddr)
@@ -198,12 +198,12 @@ func newTestClientHandler(backend *backends.SimulatedBackend, odr *LesOdr, index
 			Alloc:    core.GenesisAlloc{bankAddr: {Balance: bankFunds}},
 			GasLimit: 100000000,
 		}
-		euracle *checkpointoracle.CheckpointOracle
+		euracle *checkpointeuracle.CheckpointEuracle
 	)
 	genesis := gspec.MustCommit(db)
 	chain, _ := light.NewLightChain(odr, gspec.Config, engine, nil)
 	if indexers != nil {
-		checkpointConfig := &params.CheckpointOracleConfig{
+		checkpointConfig := &params.CheckpointEuracleConfig{
 			Address:   crypto.CreateAddress(bankAddr, 0),
 			Signers:   []common.Address{signerAddr},
 			Threshold: 1,
@@ -218,7 +218,7 @@ func newTestClientHandler(backend *backends.SimulatedBackend, odr *LesOdr, index
 				BloomRoot:    light.GetBloomTrieRoot(db, index, sectionHead),
 			}
 		}
-		euracle = checkpointoracle.New(checkpointConfig, getLocal)
+		euracle = checkpointeuracle.New(checkpointConfig, getLocal)
 	}
 	client := &LightEutherum{
 		lesCommons: lesCommons{
@@ -257,7 +257,7 @@ func newTestServerHandler(blocks int, indexers []*core.ChainIndexer, db ethdb.Da
 			Alloc:    core.GenesisAlloc{bankAddr: {Balance: bankFunds}},
 			GasLimit: 100000000,
 		}
-		euracle *checkpointoracle.CheckpointOracle
+		euracle *checkpointeuracle.CheckpointEuracle
 	)
 	genesis := gspec.MustCommit(db)
 
@@ -269,7 +269,7 @@ func newTestServerHandler(blocks int, indexers []*core.ChainIndexer, db ethdb.Da
 	txpoolConfig.Journal = ""
 	txpool := core.NewTxPool(txpoolConfig, gspec.Config, simulation.Blockchain())
 	if indexers != nil {
-		checkpointConfig := &params.CheckpointOracleConfig{
+		checkpointConfig := &params.CheckpointEuracleConfig{
 			Address:   crypto.CreateAddress(bankAddr, 0),
 			Signers:   []common.Address{signerAddr},
 			Threshold: 1,
@@ -284,7 +284,7 @@ func newTestServerHandler(blocks int, indexers []*core.ChainIndexer, db ethdb.Da
 				BloomRoot:    light.GetBloomTrieRoot(db, index, sectionHead),
 			}
 		}
-		euracle = checkpointoracle.New(checkpointConfig, getLocal)
+		euracle = checkpointeuracle.New(checkpointConfig, getLocal)
 	}
 	server := &LesServer{
 		lesCommons: lesCommons{

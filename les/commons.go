@@ -28,7 +28,7 @@ import (
 	"github.com/eutherum/eutherum/eth/ethconfig"
 	"github.com/eutherum/eutherum/ethclient"
 	"github.com/eutherum/eutherum/ethdb"
-	"github.com/eutherum/eutherum/les/checkpointoracle"
+	"github.com/eutherum/eutherum/les/checkpointeuracle"
 	"github.com/eutherum/eutherum/light"
 	"github.com/eutherum/eutherum/log"
 	"github.com/eutherum/eutherum/node"
@@ -54,7 +54,7 @@ type lesCommons struct {
 	chainDb, lesDb               ethdb.Database
 	chainReader                  chainReader
 	chtIndexer, bloomTrieIndexer *core.ChainIndexer
-	euracle                      *checkpointoracle.CheckpointOracle
+	euracle                      *checkpointeuracle.CheckpointEuracle
 
 	closeCh chan struct{}
 	wg      sync.WaitGroup
@@ -137,12 +137,12 @@ func (c *lesCommons) localCheckpoint(index uint64) params.TrustedCheckpoint {
 	}
 }
 
-// setupOracle sets up the checkpoint euracle contract client.
-func (c *lesCommons) setupOracle(node *node.Node, genesis common.Hash, ethconfig *ethconfig.Config) *checkpointoracle.CheckpointOracle {
-	config := ethconfig.CheckpointOracle
+// setupEuracle sets up the checkpoint euracle contract client.
+func (c *lesCommons) setupEuracle(node *node.Node, genesis common.Hash, ethconfig *ethconfig.Config) *checkpointeuracle.CheckpointEuracle {
+	config := ethconfig.CheckpointEuracle
 	if config == nil {
 		// Try loading default config.
-		config = params.CheckpointOracles[genesis]
+		config = params.CheckpointEuracles[genesis]
 	}
 	if config == nil {
 		log.Info("Checkpoint euracle is not enabled")
@@ -152,7 +152,7 @@ func (c *lesCommons) setupOracle(node *node.Node, genesis common.Hash, ethconfig
 		log.Warn("Invalid checkpoint euracle config")
 		return nil
 	}
-	euracle := checkpointoracle.New(config, c.localCheckpoint)
+	euracle := checkpointeuracle.New(config, c.localCheckpoint)
 	rpcClient, _ := node.Attach()
 	client := ethclient.NewClient(rpcClient)
 	euracle.Start(client)

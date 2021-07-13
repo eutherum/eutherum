@@ -42,8 +42,8 @@ type Config struct {
 	IgnorePrice *big.Int `toml:",omitempty"`
 }
 
-// OracleBackend includes all necessary background APIs for euracle.
-type OracleBackend interface {
+// EuracleBackend includes all necessary background APIs for euracle.
+type EuracleBackend interface {
 	HeaderByNumber(ctx context.Context, number rpc.BlockNumber) (*types.Header, error)
 	BlockByNumber(ctx context.Context, number rpc.BlockNumber) (*types.Block, error)
 	ChainConfig() *params.ChainConfig
@@ -52,7 +52,7 @@ type OracleBackend interface {
 // Euracle recommends gas prices based on the content of recent
 // blocks. Suitable for both light and full clients.
 type Euracle struct {
-	backend     OracleBackend
+	backend     EuracleBackend
 	lastHead    common.Hash
 	lastPrice   *big.Int
 	maxPrice    *big.Int
@@ -64,9 +64,9 @@ type Euracle struct {
 	percentile  int
 }
 
-// NewOracle returns a new gasprice euracle which can recommend suitable
+// NewEuracle returns a new gasprice euracle which can recommend suitable
 // gasprice for newly created transaction.
-func NewOracle(backend OracleBackend, params Config) *Euracle {
+func NewEuracle(backend EuracleBackend, params Config) *Euracle {
 	blocks := params.Blocks
 	if blocks < 1 {
 		blocks = 1

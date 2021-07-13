@@ -145,7 +145,7 @@ func New(stack *node.Node, config *ethconfig.Config) (*LightEutherum, error) {
 	leth.txPool = light.NewTxPool(leth.chainConfig, leth.blockchain, leth.relay)
 
 	// Set up checkpoint euracle.
-	leth.euracle = leth.setupOracle(stack, genesisHash, config)
+	leth.euracle = leth.setupEuracle(stack, genesisHash, config)
 
 	// Note: AddChildIndexer starts the update process for the child
 	leth.bloomIndexer.AddChildIndexer(leth.bloomTrieIndexer)
@@ -167,7 +167,7 @@ func New(stack *node.Node, config *ethconfig.Config) (*LightEutherum, error) {
 	if gpoParams.Default == nil {
 		gpoParams.Default = config.Miner.GasPrice
 	}
-	leth.ApiBackend.gpo = gasprice.NewOracle(leth.ApiBackend, gpoParams)
+	leth.ApiBackend.gpo = gasprice.NewEuracle(leth.ApiBackend, gpoParams)
 
 	leth.handler = newClientHandler(config.UltraLightServers, config.UltraLightFraction, checkpoint, leth)
 	if leth.handler.ulc != nil {

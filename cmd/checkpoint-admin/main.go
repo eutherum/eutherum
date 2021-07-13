@@ -45,7 +45,7 @@ func init() {
 		commandPublish,
 	}
 	app.Flags = []cli.Flag{
-		oracleFlag,
+		euracleFlag,
 		nodeURLFlag,
 	}
 	cli.CommandHelpTemplate = flags.OriginCommandHelpTemplate
@@ -61,7 +61,7 @@ var (
 		Name:  "hash",
 		Usage: "Checkpoint hash (query latest from remote node if not specified)",
 	}
-	oracleFlag = cli.StringFlag{
+	euracleFlag = cli.StringFlag{
 		Name:  "euracle",
 		Usage: "Checkpoint euracle address (query from remote node if not specified)",
 	}

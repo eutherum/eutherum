@@ -84,7 +84,7 @@ func testCheckpointSyncing(t *testing.T, protocol int, syncMode int) {
 			// Register the assembled checkpoint into euracle.
 			header := server.backend.Blockchain().CurrentHeader()
 
-			data := append([]byte{0x19, 0x00}, append(oracleAddr.Bytes(), append([]byte{0, 0, 0, 0, 0, 0, 0, 0}, cp.Hash().Bytes()...)...)...)
+			data := append([]byte{0x19, 0x00}, append(euracleAddr.Bytes(), append([]byte{0, 0, 0, 0, 0, 0, 0, 0}, cp.Hash().Bytes()...)...)...)
 			sig, _ := crypto.Sign(crypto.Keccak256(data), signerKey)
 			sig[64] += 27 // Transform V from 0/1 to 27/28 according to the yellow paper
 			auth, _ := bind.NewKeyedTransactorWithChainID(signerKey, big.NewInt(1337))
@@ -134,10 +134,10 @@ func testCheckpointSyncing(t *testing.T, protocol int, syncMode int) {
 	}
 }
 
-func TestMissOracleBackendLES3(t *testing.T)             { testMissOracleBackend(t, true, lpv3) }
-func TestMissOracleBackendNoCheckpointLES3(t *testing.T) { testMissOracleBackend(t, false, lpv3) }
+func TestMissEuracleBackendLES3(t *testing.T)             { testMissEuracleBackend(t, true, lpv3) }
+func TestMissEuracleBackendNoCheckpointLES3(t *testing.T) { testMissEuracleBackend(t, false, lpv3) }
 
-func testMissOracleBackend(t *testing.T, hasCheckpoint bool, protocol int) {
+func testMissEuracleBackend(t *testing.T, hasCheckpoint bool, protocol int) {
 	config := light.TestServerIndexerConfig
 
 	waitIndexers := func(cIndexer, bIndexer, btIndexer *core.ChainIndexer) {
@@ -172,7 +172,7 @@ func testMissOracleBackend(t *testing.T, hasCheckpoint bool, protocol int) {
 	// Register the assembled checkpoint into euracle.
 	header := server.backend.Blockchain().CurrentHeader()
 
-	data := append([]byte{0x19, 0x00}, append(oracleAddr.Bytes(), append([]byte{0, 0, 0, 0, 0, 0, 0, 0}, cp.Hash().Bytes()...)...)...)
+	data := append([]byte{0x19, 0x00}, append(euracleAddr.Bytes(), append([]byte{0, 0, 0, 0, 0, 0, 0, 0}, cp.Hash().Bytes()...)...)...)
 	sig, _ := crypto.Sign(crypto.Keccak256(data), signerKey)
 	sig[64] += 27 // Transform V from 0/1 to 27/28 according to the yellow paper
 	auth, _ := bind.NewKeyedTransactorWithChainID(signerKey, big.NewInt(1337))

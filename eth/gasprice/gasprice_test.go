@@ -104,7 +104,7 @@ func TestSuggestPrice(t *testing.T) {
 		Default:    big.NewInt(params.GWei),
 	}
 	backend := newTestBackend(t)
-	euracle := NewOracle(backend, config)
+	euracle := NewEuracle(backend, config)
 
 	// The gas price sampled is: 32G, 31G, 30G, 29G, 28G, 27G
 	got, err := euracle.SuggestPrice(context.Background())
