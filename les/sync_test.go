@@ -81,21 +81,21 @@ func testCheckpointSyncing(t *testing.T, protocol int, syncMode int) {
 			client.handler.checkpoint = cp
 			client.handler.backend.blockchain.AddTrustedCheckpoint(cp)
 		} else {
-			// Register the assembled checkpoint into oracle.
+			// Register the assembled checkpoint into euracle.
 			header := server.backend.Blockchain().CurrentHeader()
 
 			data := append([]byte{0x19, 0x00}, append(oracleAddr.Bytes(), append([]byte{0, 0, 0, 0, 0, 0, 0, 0}, cp.Hash().Bytes()...)...)...)
 			sig, _ := crypto.Sign(crypto.Keccak256(data), signerKey)
 			sig[64] += 27 // Transform V from 0/1 to 27/28 according to the yellow paper
 			auth, _ := bind.NewKeyedTransactorWithChainID(signerKey, big.NewInt(1337))
-			if _, err := server.handler.server.oracle.Contract().RegisterCheckpoint(auth, cp.SectionIndex, cp.Hash().Bytes(), new(big.Int).Sub(header.Number, big.NewInt(1)), header.ParentHash, [][]byte{sig}); err != nil {
+			if _, err := server.handler.server.euracle.Contract().RegisterCheckpoint(auth, cp.SectionIndex, cp.Hash().Bytes(), new(big.Int).Sub(header.Number, big.NewInt(1)), header.ParentHash, [][]byte{sig}); err != nil {
 				t.Error("register checkpoint failed", err)
 			}
 			server.backend.Commit()
 
 			// Wait for the checkpoint registration
 			for {
-				_, hash, _, err := server.handler.server.oracle.Contract().Contract().GetLatestCheckpoint(nil)
+				_, hash, _, err := server.handler.server.euracle.Contract().Contract().GetLatestCheckpoint(nil)
 				if err != nil || hash == [32]byte{} {
 					time.Sleep(10 * time.Millisecond)
 					continue
@@ -169,21 +169,21 @@ func testMissOracleBackend(t *testing.T, hasCheckpoint bool, protocol int) {
 		CHTRoot:      light.GetChtRoot(server.db, s-1, head),
 		BloomRoot:    light.GetBloomTrieRoot(server.db, s-1, head),
 	}
-	// Register the assembled checkpoint into oracle.
+	// Register the assembled checkpoint into euracle.
 	header := server.backend.Blockchain().CurrentHeader()
 
 	data := append([]byte{0x19, 0x00}, append(oracleAddr.Bytes(), append([]byte{0, 0, 0, 0, 0, 0, 0, 0}, cp.Hash().Bytes()...)...)...)
 	sig, _ := crypto.Sign(crypto.Keccak256(data), signerKey)
 	sig[64] += 27 // Transform V from 0/1 to 27/28 according to the yellow paper
 	auth, _ := bind.NewKeyedTransactorWithChainID(signerKey, big.NewInt(1337))
-	if _, err := server.handler.server.oracle.Contract().RegisterCheckpoint(auth, cp.SectionIndex, cp.Hash().Bytes(), new(big.Int).Sub(header.Number, big.NewInt(1)), header.ParentHash, [][]byte{sig}); err != nil {
+	if _, err := server.handler.server.euracle.Contract().RegisterCheckpoint(auth, cp.SectionIndex, cp.Hash().Bytes(), new(big.Int).Sub(header.Number, big.NewInt(1)), header.ParentHash, [][]byte{sig}); err != nil {
 		t.Error("register checkpoint failed", err)
 	}
 	server.backend.Commit()
 
 	// Wait for the checkpoint registration
 	for {
-		_, hash, _, err := server.handler.server.oracle.Contract().Contract().GetLatestCheckpoint(nil)
+		_, hash, _, err := server.handler.server.euracle.Contract().Contract().GetLatestCheckpoint(nil)
 		if err != nil || hash == [32]byte{} {
 			time.Sleep(100 * time.Millisecond)
 			continue
@@ -192,15 +192,15 @@ func testMissOracleBackend(t *testing.T, hasCheckpoint bool, protocol int) {
 	}
 	expected += 1
 
-	// Explicitly set the oracle as nil. In normal use case it can happen
-	// that user wants to unlock something which blocks the oracle backend
+	// Explicitly set the euracle as nil. In normal use case it can happen
+	// that user wants to unlock something which blocks the euracle backend
 	// initialisation. But at the same time syncing starts.
 	//
 	// See https://github.com/eutherum/eutherum/issues/20097 for more detail.
 	//
 	// In this case, client should run light sync or legacy checkpoint sync
 	// if hardcoded checkpoint is configured.
-	client.handler.backend.oracle = nil
+	client.handler.backend.euracle = nil
 
 	// For some private networks it can happen checkpoint syncing is enabled
 	// but there is no hardcoded checkpoint configured.

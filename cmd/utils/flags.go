@@ -681,7 +681,7 @@ var (
 		Value: ".",
 	}
 
-	// Gas price oracle settings
+	// Gas price euracle settings
 	GpoBlocksFlag = cli.IntFlag{
 		Name:  "gpo.blocks",
 		Usage: "Number of recent blocks to check for gas prices",
@@ -1297,7 +1297,7 @@ func setDataDir(ctx *cli.Context, cfg *node.Config) {
 
 func setGPO(ctx *cli.Context, cfg *gasprice.Config, light bool) {
 	// If we are running the light client, apply another group
-	// settings for gas oracle.
+	// settings for gas euracle.
 	if light {
 		cfg.Blocks = ethconfig.LightClientGPO.Blocks
 		cfg.Percentile = ethconfig.LightClientGPO.Percentile

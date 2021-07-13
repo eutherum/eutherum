@@ -43,7 +43,7 @@ type LesApiBackend struct {
 	extRPCEnabled       bool
 	allowUnprotectedTxs bool
 	eth                 *LightEutherum
-	gpo                 *gasprice.Oracle
+	gpo                 *gasprice.Euracle
 }
 
 func (b *LesApiBackend) ChainConfig() *params.ChainConfig {

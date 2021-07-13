@@ -399,8 +399,8 @@ func (api *PrivateLightAPI) GetCheckpoint(index uint64) ([3]string, error) {
 
 // GetCheckpointContractAddress returns the contract contract address in hex format.
 func (api *PrivateLightAPI) GetCheckpointContractAddress() (string, error) {
-	if api.backend.oracle == nil {
+	if api.backend.euracle == nil {
 		return "", errNotActivated
 	}
-	return api.backend.oracle.Contract().ContractAddr().Hex(), nil
+	return api.backend.euracle.Contract().ContractAddr().Hex(), nil
 }

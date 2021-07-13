@@ -1,6 +1,6 @@
 ## Checkpoint-admin
 
-Checkpoint-admin is a tool for updating checkpoint oracle status. It provides a series of functions including deploying checkpoint oracle contract, signing for new checkpoints, and updating checkpoints in the checkpoint oracle contract.
+Checkpoint-admin is a tool for updating checkpoint euracle status. It provides a series of functions including deploying checkpoint euracle contract, signing for new checkpoints, and updating checkpoints in the checkpoint euracle contract.
 
 ### Checkpoint
 
@@ -20,17 +20,17 @@ However, from a security perspective, the most critical step in a synchronizatio
 
 There are several hardcoded checkpoints in the [source code](https://github.com/eutherum/eutherum/blob/master/params/config.go#L38) of the eutherum project. These checkpoints are updated by eutherum developers when new versions of software are released. Because light client users trust Geuth developers to some extent, hardcoded checkpoints in the code can also be considered correct.
 
-#### Checkpoint oracle
+#### Checkpoint euracle
 
 Hardcoded checkpoints can solve the problem of verifying the correctness of checkpoints (although this is a more centralized solution). But the pain point of this solution is that developers can only update checkpoints when a new version of software is released. In addition, light client users usually do not keep the Geuth version they use always up to date. So hardcoded checkpoints used by users are generally stale. Therefore, it still needs to download a large amount of blockchain data during synchronization.
 
-Checkpoint oracle is a more flexible solution. In simple terms, this is a smart contract that is deployed on the blockchain. The smart contract records several designated trusted signers. Whenever enough trusted signers have issued their signatures for the same checkpoint, it can be considered that the checkpoint has been authenticated by the signers. Checkpoints authenticated by trusted signers can be considered correct.
+Checkpoint euracle is a more flexible solution. In simple terms, this is a smart contract that is deployed on the blockchain. The smart contract records several designated trusted signers. Whenever enough trusted signers have issued their signatures for the same checkpoint, it can be considered that the checkpoint has been authenticated by the signers. Checkpoints authenticated by trusted signers can be considered correct.
 
-So this way, even without updating the software version, as long as the trusted signers regularly update the checkpoint in oracle on time, the light client can always use the latest and verified checkpoint for data synchronization.
+So this way, even without updating the software version, as long as the trusted signers regularly update the checkpoint in euracle on time, the light client can always use the latest and verified checkpoint for data synchronization.
 
 ### Usage
 
-Checkpoint-admin is a command line tool designed for checkpoint oracle. Users can easily deploy contracts and update checkpoints through this tool.
+Checkpoint-admin is a command line tool designed for checkpoint euracle. Users can easily deploy contracts and update checkpoints through this tool.
 
 #### Install
 
@@ -40,7 +40,7 @@ go get github.com/eutherum/eutherum/cmd/checkpoint-admin
 
 #### Deploy
 
-Deploy checkpoint oracle contract. `--signers` indicates the specified trusted signer, and `--threshold` indicates the minimum number of signatures required by trusted signers to update a checkpoint.
+Deploy checkpoint euracle contract. `--signers` indicates the specified trusted signer, and `--threshold` indicates the minimum number of signatures required by trusted signers to update a checkpoint.
 
 ```shell
 checkpoint-admin deploy --rpc <NODE_RPC_ENDPOINT> --clef <CLEF_ENDPOINT> --signer <SIGNER_TO_SIGN_TX> --signers <TRUSTED_SIGNER_LIST> --threshold 1
@@ -63,14 +63,14 @@ checkpoint-admin sign --clef <CLEF_ENDPOINT> --signer <SIGNER_TO_SIGN_CHECKPOINT
 **Offline mode**
 
 ```shell
-checkpoint-admin sign --clef <CLEF_ENDPOINT> --signer <SIGNER_TO_SIGN_CHECKPOINT> --index <CHECKPOINT_INDEX> --hash <CHECKPOINT_HASH> --oracle <CHECKPOINT_ORACLE_ADDRESS>
+checkpoint-admin sign --clef <CLEF_ENDPOINT> --signer <SIGNER_TO_SIGN_CHECKPOINT> --index <CHECKPOINT_INDEX> --hash <CHECKPOINT_HASH> --euracle <CHECKPOINT_ORACLE_ADDRESS>
 ```
 
 *CHECKPOINT_HASH is obtained based on this [calculation method](https://github.com/eutherum/eutherum/blob/master/params/config.go#L251).*
 
 #### Publish
 
-Collect enough signatures from different trusted signers for the same checkpoint and submit them to oracle to update the "authenticated" checkpoint in the contract.
+Collect enough signatures from different trusted signers for the same checkpoint and submit them to euracle to update the "authenticated" checkpoint in the contract.
 
 ```shell
 checkpoint-admin publish --clef <CLEF_ENDPOINT> --rpc <NODE_RPC_ENDPOINT> --signer <SIGNER_TO_SIGN_TX> --index <CHECKPOINT_INDEX> --signatures <CHECKPOINT_SIGNATURE_LIST>
@@ -78,15 +78,15 @@ checkpoint-admin publish --clef <CLEF_ENDPOINT> --rpc <NODE_RPC_ENDPOINT> --sign
 
 #### Status query
 
-Check the latest status of checkpoint oracle.
+Check the latest status of checkpoint euracle.
 
 ```shell
 checkpoint-admin status --rpc <NODE_RPC_ENDPOINT>
 ```
 
-### Enable checkpoint oracle in your private network
+### Enable checkpoint euracle in your private network
 
-Currently, only the Eutherum mainnet and the default supported test networks (ropsten, rinkeby, goerli) activate this feature. If you want to activate this feature in your private network, you can overwrite the relevant checkpoint oracle settings through the configuration file after deploying the oracle contract.
+Currently, only the Eutherum mainnet and the default supported test networks (ropsten, rinkeby, goerli) activate this feature. If you want to activate this feature in your private network, you can overwrite the relevant checkpoint euracle settings through the configuration file after deploying the euracle contract.
 
 * Get your node configuration file `geuth dumpconfig OTHER_COMMAND_LINE_OPTIONS > config.toml`
 * Edit the configuration file and add the following information
@@ -100,4 +100,4 @@ Threshold = THRESHOLD
 
 * Start geuth with the modified configuration file
 
-*In the private network, all fullnodes and light clients need to be started using the same checkpoint oracle settings.*
+*In the private network, all fullnodes and light clients need to be started using the same checkpoint euracle settings.*

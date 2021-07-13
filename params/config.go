@@ -80,7 +80,7 @@ var (
 		BloomRoot:    common.HexToHash("0x8769d466c47ec57283faaa9886a2f9e60ace60bd4f02ac4be7f0a7a428db66c2"),
 	}
 
-	// MainnetCheckpointOracle contains a set of configs for the main network oracle.
+	// MainnetCheckpointOracle contains a set of configs for the main network euracle.
 	MainnetCheckpointOracle = &CheckpointOracleConfig{
 		Address: common.HexToAddress("0xdd7e58b8c2eca88bf27a421af83599553000cafb"),
 		Signers: []common.Address{
@@ -116,7 +116,7 @@ var (
 		BloomRoot:    common.HexToHash("0x3dc04cb1be7ddc271f3f83469b47b76184a79d7209ef51d85b1539ea6d25a645"),
 	}
 
-	// RopstenCheckpointOracle contains a set of configs for the Ropsten test network oracle.
+	// RopstenCheckpointOracle contains a set of configs for the Ropsten test network euracle.
 	RopstenCheckpointOracle = &CheckpointOracleConfig{
 		Address: common.HexToAddress("0xEF79475013f154E6A65b54cB2742867791bf0B84"),
 		Signers: []common.Address{
@@ -159,7 +159,7 @@ var (
 		BloomRoot:    common.HexToHash("0x70e01232b66df9a7778ae3291c9217afb9a2d9f799f32d7b912bd37e7bce83a8"),
 	}
 
-	// RinkebyCheckpointOracle contains a set of configs for the Rinkeby test network oracle.
+	// RinkebyCheckpointOracle contains a set of configs for the Rinkeby test network euracle.
 	RinkebyCheckpointOracle = &CheckpointOracleConfig{
 		Address: common.HexToAddress("0xebe8eFA441B9302A0d7eaECc277c09d20D684540"),
 		Signers: []common.Address{
@@ -200,7 +200,7 @@ var (
 		BloomRoot:    common.HexToHash("0x523c169286cfca52e8a6579d8c35dc8bf093412d8a7478163bfa81ae91c2492d"),
 	}
 
-	// GoerliCheckpointOracle contains a set of configs for the Goerli test network oracle.
+	// GoerliCheckpointOracle contains a set of configs for the Goerli test network euracle.
 	GoerliCheckpointOracle = &CheckpointOracleConfig{
 		Address: common.HexToAddress("0x18CA0E045F0D772a851BC7e48357Bcaab0a0795D"),
 		Signers: []common.Address{
@@ -292,7 +292,7 @@ func (c *TrustedCheckpoint) Empty() bool {
 	return c.SectionHead == (common.Hash{}) || c.CHTRoot == (common.Hash{}) || c.BloomRoot == (common.Hash{})
 }
 
-// CheckpointOracleConfig represents a set of checkpoint contract(which acts as an oracle)
+// CheckpointOracleConfig represents a set of checkpoint contract(which acts as an euracle)
 // config which used for light client checkpoint syncing.
 type CheckpointOracleConfig struct {
 	Address   common.Address   `json:"address"`

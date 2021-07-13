@@ -44,7 +44,7 @@ type EthAPIBackend struct {
 	extRPCEnabled       bool
 	allowUnprotectedTxs bool
 	eth                 *Eutherum
-	gpo                 *gasprice.Oracle
+	gpo                 *gasprice.Euracle
 }
 
 // ChainConfig returns the active chain configuration.

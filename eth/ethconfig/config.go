@@ -39,7 +39,7 @@ import (
 	"github.com/eutherum/eutherum/params"
 )
 
-// FullNodeGPO contains default gasprice oracle settings for full node.
+// FullNodeGPO contains default gasprice euracle settings for full node.
 var FullNodeGPO = gasprice.Config{
 	Blocks:      20,
 	Percentile:  60,
@@ -47,7 +47,7 @@ var FullNodeGPO = gasprice.Config{
 	IgnorePrice: gasprice.DefaultIgnorePrice,
 }
 
-// LightClientGPO contains default gasprice oracle settings for light client.
+// LightClientGPO contains default gasprice euracle settings for light client.
 var LightClientGPO = gasprice.Config{
 	Blocks:      2,
 	Percentile:  60,
@@ -173,7 +173,7 @@ type Config struct {
 	// Transaction pool options
 	TxPool core.TxPoolConfig
 
-	// Gas Price Oracle options
+	// Gas Price Euracle options
 	GPO gasprice.Config
 
 	// Enables tracking of SHA3 preimages in the VM
@@ -198,7 +198,7 @@ type Config struct {
 	// Checkpoint is a hardcoded checkpoint which can be nil.
 	Checkpoint *params.TrustedCheckpoint `toml:",omitempty"`
 
-	// CheckpointOracle is the configuration for checkpoint oracle.
+	// CheckpointOracle is the configuration for checkpoint euracle.
 	CheckpointOracle *params.CheckpointOracleConfig `toml:",omitempty"`
 
 	// Berlin block override (TODO: remove after the fork)

@@ -15,7 +15,7 @@
 // along with eutherum. If not, see <http://www.gnu.org/licenses/>.
 
 // checkpoint-admin is a utility that can be used to query checkpoint information
-// and register stable checkpoints into an oracle contract.
+// and register stable checkpoints into an euracle contract.
 package main
 
 import (
@@ -62,8 +62,8 @@ var (
 		Usage: "Checkpoint hash (query latest from remote node if not specified)",
 	}
 	oracleFlag = cli.StringFlag{
-		Name:  "oracle",
-		Usage: "Checkpoint oracle address (query from remote node if not specified)",
+		Name:  "euracle",
+		Usage: "Checkpoint euracle address (query from remote node if not specified)",
 	}
 	thresholdFlag = cli.Int64Flag{
 		Name:  "threshold",

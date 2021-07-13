@@ -67,7 +67,7 @@ func (h *clientHandler) validateCheckpoint(peer *serverPeer) error {
 	if err != nil {
 		return err
 	}
-	events := h.backend.oracle.Contract().LookupCheckpointEvents(logs, peer.checkpoint.SectionIndex, peer.checkpoint.Hash())
+	events := h.backend.euracle.Contract().LookupCheckpointEvents(logs, peer.checkpoint.SectionIndex, peer.checkpoint.Hash())
 	if len(events) == 0 {
 		return errInvalidCheckpoint
 	}
@@ -79,7 +79,7 @@ func (h *clientHandler) validateCheckpoint(peer *serverPeer) error {
 	for _, event := range events {
 		signatures = append(signatures, append(event.R[:], append(event.S[:], event.V)...))
 	}
-	valid, signers := h.backend.oracle.VerifySigners(index, hash, signatures)
+	valid, signers := h.backend.euracle.VerifySigners(index, hash, signatures)
 	if !valid {
 		return errInvalidCheckpoint
 	}
@@ -146,7 +146,7 @@ func (h *clientHandler) synchronise(peer *serverPeer) {
 	case local:
 		mode = legacyCheckpointSync
 		log.Debug("Disable checkpoint syncing", "reason", "checkpoint is hardcoded")
-	case h.backend.oracle == nil || !h.backend.oracle.IsRunning():
+	case h.backend.euracle == nil || !h.backend.euracle.IsRunning():
 		if h.checkpoint == nil {
 			mode = lightSync // Downgrade to light sync unfortunately.
 		} else {

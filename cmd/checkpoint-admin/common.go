@@ -54,7 +54,7 @@ func newRPCClient(url string) *rpc.Client {
 func getContractAddr(client *rpc.Client) common.Address {
 	var addr string
 	if err := client.Call(&addr, "les_getCheckpointContractAddress"); err != nil {
-		utils.Fatalf("Failed to fetch checkpoint oracle address: %v", err)
+		utils.Fatalf("Failed to fetch checkpoint euracle address: %v", err)
 	}
 	return common.HexToAddress(addr)
 }

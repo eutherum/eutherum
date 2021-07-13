@@ -655,7 +655,7 @@ func (net *Network) getConn(oneID, otherID enode.ID) *Conn {
 // it checks if the connection is already up, and if the nodes are running
 // NOTE:
 // it also checks whether there has been recent attempt to connect the peers
-// this is cheating as the simulation is used as an oracle and know about
+// this is cheating as the simulation is used as an euracle and know about
 // remote peers attempt to connect to a node which will then not initiate the connection
 func (net *Network) InitConn(oneID, otherID enode.ID) (*Conn, error) {
 	net.lock.Lock()

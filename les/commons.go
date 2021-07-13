@@ -54,7 +54,7 @@ type lesCommons struct {
 	chainDb, lesDb               ethdb.Database
 	chainReader                  chainReader
 	chtIndexer, bloomTrieIndexer *core.ChainIndexer
-	oracle                       *checkpointoracle.CheckpointOracle
+	euracle                      *checkpointoracle.CheckpointOracle
 
 	closeCh chan struct{}
 	wg      sync.WaitGroup
@@ -137,7 +137,7 @@ func (c *lesCommons) localCheckpoint(index uint64) params.TrustedCheckpoint {
 	}
 }
 
-// setupOracle sets up the checkpoint oracle contract client.
+// setupOracle sets up the checkpoint euracle contract client.
 func (c *lesCommons) setupOracle(node *node.Node, genesis common.Hash, ethconfig *ethconfig.Config) *checkpointoracle.CheckpointOracle {
 	config := ethconfig.CheckpointOracle
 	if config == nil {
@@ -145,17 +145,17 @@ func (c *lesCommons) setupOracle(node *node.Node, genesis common.Hash, ethconfig
 		config = params.CheckpointOracles[genesis]
 	}
 	if config == nil {
-		log.Info("Checkpoint oracle is not enabled")
+		log.Info("Checkpoint euracle is not enabled")
 		return nil
 	}
 	if config.Address == (common.Address{}) || uint64(len(config.Signers)) < config.Threshold {
-		log.Warn("Invalid checkpoint oracle config")
+		log.Warn("Invalid checkpoint euracle config")
 		return nil
 	}
-	oracle := checkpointoracle.New(config, c.localCheckpoint)
+	euracle := checkpointoracle.New(config, c.localCheckpoint)
 	rpcClient, _ := node.Attach()
 	client := ethclient.NewClient(rpcClient)
-	oracle.Start(client)
-	log.Info("Configured checkpoint oracle", "address", config.Address, "signers", len(config.Signers), "threshold", config.Threshold)
-	return oracle
+	euracle.Start(client)
+	log.Info("Configured checkpoint euracle", "address", config.Address, "signers", len(config.Signers), "threshold", config.Threshold)
+	return euracle
 }

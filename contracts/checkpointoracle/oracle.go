@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the eutherum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package checkpointoracle is a an on-chain light client checkpoint oracle.
+// Package checkpointoracle is a an on-chain light client checkpoint euracle.
 package checkpointoracle
 
-//go:generate abigen --sol contract/oracle.sol --pkg contract --out contract/oracle.go
+//go:generate abigen --sol contract/euracle.sol --pkg contract --out contract/euracle.go
 
 import (
 	"errors"
@@ -29,7 +29,7 @@ import (
 	"github.com/eutherum/eutherum/core/types"
 )
 
-// CheckpointOracle is a Go wrapper around an on-chain checkpoint oracle contract.
+// CheckpointOracle is a Go wrapper around an on-chain checkpoint euracle contract.
 type CheckpointOracle struct {
 	address  common.Address
 	contract *contract.CheckpointOracle
@@ -45,23 +45,23 @@ func NewCheckpointOracle(contractAddr common.Address, backend bind.ContractBacke
 }
 
 // ContractAddr returns the address of contract.
-func (oracle *CheckpointOracle) ContractAddr() common.Address {
-	return oracle.address
+func (euracle *CheckpointOracle) ContractAddr() common.Address {
+	return euracle.address
 }
 
 // Contract returns the underlying contract instance.
-func (oracle *CheckpointOracle) Contract() *contract.CheckpointOracle {
-	return oracle.contract
+func (euracle *CheckpointOracle) Contract() *contract.CheckpointOracle {
+	return euracle.contract
 }
 
 // LookupCheckpointEvents searches checkpoint event for specific section in the
 // given log batches.
-func (oracle *CheckpointOracle) LookupCheckpointEvents(blockLogs [][]*types.Log, section uint64, hash common.Hash) []*contract.CheckpointOracleNewCheckpointVote {
+func (euracle *CheckpointOracle) LookupCheckpointEvents(blockLogs [][]*types.Log, section uint64, hash common.Hash) []*contract.CheckpointOracleNewCheckpointVote {
 	var votes []*contract.CheckpointOracleNewCheckpointVote
 
 	for _, logs := range blockLogs {
 		for _, log := range logs {
-			event, err := oracle.contract.ParseNewCheckpointVote(*log)
+			event, err := euracle.contract.ParseNewCheckpointVote(*log)
 			if err != nil {
 				continue
 			}
@@ -78,7 +78,7 @@ func (oracle *CheckpointOracle) LookupCheckpointEvents(blockLogs [][]*types.Log,
 //
 // Notably all signatures given should be transformed to "eutherum style" which transforms
 // v from 0/1 to 27/28 according to the yellow paper.
-func (oracle *CheckpointOracle) RegisterCheckpoint(opts *bind.TransactOpts, index uint64, hash []byte, rnum *big.Int, rhash [32]byte, sigs [][]byte) (*types.Transaction, error) {
+func (euracle *CheckpointOracle) RegisterCheckpoint(opts *bind.TransactOpts, index uint64, hash []byte, rnum *big.Int, rhash [32]byte, sigs [][]byte) (*types.Transaction, error) {
 	var (
 		r [][32]byte
 		s [][32]byte
@@ -92,5 +92,5 @@ func (oracle *CheckpointOracle) RegisterCheckpoint(opts *bind.TransactOpts, inde
 		s = append(s, common.BytesToHash(sigs[i][32:64]))
 		v = append(v, sigs[i][64])
 	}
-	return oracle.contract.SetCheckpoint(opts, rnum, rhash, common.BytesToHash(hash), index, v, r, s)
+	return euracle.contract.SetCheckpoint(opts, rnum, rhash, common.BytesToHash(hash), index, v, r, s)
 }

@@ -26,7 +26,7 @@ import (
 
 var commandStatus = cli.Command{
 	Name:  "status",
-	Usage: "Fetches the signers and checkpoint status of the oracle contract",
+	Usage: "Fetches the signers and checkpoint status of the euracle contract",
 	Flags: []cli.Flag{
 		nodeURLFlag,
 	},
@@ -35,13 +35,13 @@ var commandStatus = cli.Command{
 
 // status fetches the admin list of specified registrar contract.
 func status(ctx *cli.Context) error {
-	// Create a wrapper around the checkpoint oracle contract
-	addr, oracle := newContract(newRPCClient(ctx.GlobalString(nodeURLFlag.Name)))
-	fmt.Printf("Oracle => %s\n", addr.Hex())
+	// Create a wrapper around the checkpoint euracle contract
+	addr, euracle := newContract(newRPCClient(ctx.GlobalString(nodeURLFlag.Name)))
+	fmt.Printf("Euracle => %s\n", addr.Hex())
 	fmt.Println()
 
 	// Retrieve the list of authorized signers (admins)
-	admins, err := oracle.Contract().GetAllAdmin(nil)
+	admins, err := euracle.Contract().GetAllAdmin(nil)
 	if err != nil {
 		return err
 	}
@@ -51,7 +51,7 @@ func status(ctx *cli.Context) error {
 	fmt.Println()
 
 	// Retrieve the latest checkpoint
-	index, checkpoint, height, err := oracle.Contract().GetLatestCheckpoint(nil)
+	index, checkpoint, height, err := euracle.Contract().GetLatestCheckpoint(nil)
 	if err != nil {
 		return err
 	}

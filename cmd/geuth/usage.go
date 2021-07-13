@@ -191,7 +191,7 @@ var AppHelpFlagGroups = []flags.FlagGroup{
 		},
 	},
 	{
-		Name: "GAS PRICE ORACLE",
+		Name: "GAS PRICE EURACLE",
 		Flags: []cli.Flag{
 			utils.GpoBlocksFlag,
 			utils.GpoPercentileFlag,

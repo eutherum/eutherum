@@ -1083,8 +1083,8 @@ func (p *clientPeer) Handshake(td *big.Int, head common.Hash, headNum uint64, ge
 
 		// Add advertised checkpoint and register block height which
 		// client can verify the checkpoint validity.
-		if server.oracle != nil && server.oracle.IsRunning() {
-			cp, height := server.oracle.StableCheckpoint()
+		if server.euracle != nil && server.euracle.IsRunning() {
+			cp, height := server.euracle.StableCheckpoint()
 			if cp != nil {
 				*lists = (*lists).add("checkpoint/value", cp)
 				*lists = (*lists).add("checkpoint/registerHeight", height)
