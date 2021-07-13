@@ -17,7 +17,7 @@
 package params
 
 // These are the multipliers for euther denominations.
-// Example: To get the wei value of an amount in 'gwei', use
+// Example: To get the uwei value of an amount in 'gwei', use
 //
 //    new(big.Int).Mul(value, big.NewInt(params.GWei))
 //

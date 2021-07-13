@@ -222,7 +222,7 @@ Response
      - `to` [address]: receiver account. If omitted or `0x`, will cause contract creation.
      - `gas` [number]: maximum amount of gas to burn
      - `gasPrice` [number]: gas price
-     - `value` [number:optional]: amount of Wei to send with the transaction
+     - `value` [number:optional]: amount of Uwei to send with the transaction
      - `data` [data:optional]:  input data
      - `nonce` [number]: account nonce
   1. method signature [string:optional]

@@ -25,10 +25,10 @@ import (
 // LegacyTx is the transaction data of regular Eutherum transactions.
 type LegacyTx struct {
 	Nonce    uint64          // nonce of sender account
-	GasPrice *big.Int        // wei per gas
+	GasPrice *big.Int        // uwei per gas
 	Gas      uint64          // gas limit
 	To       *common.Address `rlp:"nil"` // nil means contract creation
-	Value    *big.Int        // wei amount
+	Value    *big.Int        // uwei amount
 	Data     []byte          // contract invocation input data
 	V, R, S  *big.Int        // signature values
 }

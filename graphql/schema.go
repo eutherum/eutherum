@@ -92,7 +92,7 @@ const schema string = `
         to(block: Long): Account
         # Value is the value, in wei, sent along with this transaction.
         value: BigInt!
-        # GasPrice is the price offered to miners for gas, in wei per unit.
+        # GasPrice is the price offered to miners for gas, in uwei per unit.
         gasPrice: BigInt!
         # Gas is the maximum amount of gas this transaction can consume.
         gas: Long!

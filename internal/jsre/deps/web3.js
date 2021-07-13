@@ -2138,7 +2138,7 @@ var getValueOfUnit = function (unit) {
 };
 
 /**
- * Takes a number of wei and converts it to any other euther unit.
+ * Takes a number of uwei and converts it to any other euther unit.
  *
  * Possible units are:
  *   SI Short   SI Full        Effigy       Other

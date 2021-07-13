@@ -2468,7 +2468,7 @@ func TestDeleteCreateRevert(t *testing.T) {
 					Nonce:   1,
 					Balance: big.NewInt(0),
 				},
-				// The address 0xBBBB send 1 wei to 0xAAAA, then reverts
+				// The address 0xBBBB send 1 uwei to 0xAAAA, then reverts
 				bb: {
 					Code: []byte{
 						byte(vm.PC),          // [0]
