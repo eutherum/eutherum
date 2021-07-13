@@ -25,7 +25,7 @@ To be able to distribute funds, the `faucet` needs access to an already funded E
 
 The faucet is able to distribute various amounts of Euther in exchange for various timeouts. These can be configured via:
 
-- `--faucet.amount` is the number of Ethers to send by default
+- `--faucet.amount` is the number of euthers to send by default
 - `--faucet.minutes` is the time to wait before allowing a rerequest
 - `--faucet.tiers` is the funding tiers to support  (x3 time, x2.5 funds)
 
